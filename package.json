@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "react graphql relay",
   "scripts": {
-    "start": "babel-node ./src/server"
+    "server": "babel-node ./src/server",
+    "start": "nodemon --watch ./src/server --exec npm run server"
   },
   "author": "Gopikrishna Sathyamurthy",
   "license": "ISC",
