@@ -2,6 +2,6 @@ import express from 'express';
 
 const app = express();
 
-app.get('/', (req, res) => res.send('hello world'));
+app.use(express.static('src/client'));
 
 app.listen(8080);
