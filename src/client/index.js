@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const HelloWorld = React.createClass({
-  render() {
-    return React.createElement('h3', null, 'Hello World!');
-  }
-});
+const HelloWorld = () =>
+  <h3>
+    Hello World!
+  </h3>;
 
-ReactDOM.render(React.createElement(HelloWorld), document.querySelector('.content'));
+ReactDOM.render(<HelloWorld/>, document.querySelector('.content'));
