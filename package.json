@@ -2,7 +2,9 @@
   "name": "react-graphql-relay",
   "version": "1.0.0",
   "description": "react graphql relay",
-  "scripts": {},
+  "scripts": {
+    "start": "babel-node ./src/server"
+  },
   "author": "Gopikrishna Sathyamurthy",
   "license": "ISC",
   "dependencies": {
