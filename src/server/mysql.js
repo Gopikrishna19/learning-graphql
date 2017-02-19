@@ -4,4 +4,14 @@ import {resolve} from 'path';
 
 const mysqlrc = fs.readFileSync(resolve('.mysqlrc'));
 
-export const connection = mysql.createConnection(JSON.parse(mysqlrc));
+const connection = mysql.createConnection(JSON.parse(mysqlrc));
+
+export const dbConnect = () => new Promise((resolve, reject) => {
+  connection.connect(err => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(connection);
+    }
+  });
+});
