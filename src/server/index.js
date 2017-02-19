@@ -1,9 +1,13 @@
-import express from 'express';
+import GraphQLHttp from 'express-graphql';
 import {connection} from './mysql';
+import express from 'express';
+import schema from './data/schema';
 
 const app = express();
 
 app.use(express.static('dist'));
+
+app.use('/graphql', GraphQLHttp({schema}));
 
 app.get('/links', (req, res) => {
   console.log('Serving: /links');
