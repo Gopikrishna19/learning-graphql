@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import Link from './link';
 import Relay from 'react-relay';
 
 const Links = props =>
@@ -6,11 +7,10 @@ const Links = props =>
     {
       props.store.links.map(
         (link, index) =>
-          <li key={index}>
-            <a href={link.url}>
-              {link.title}
-            </a>
-          </li>
+          <Link
+            key={index}
+            {...link}
+          />
       )
     }
   </ul>;
