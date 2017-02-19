@@ -5,16 +5,24 @@ import {connection} from './mysql';
 import express from 'express';
 
 const app = express();
+const setupGraphQL = conn => {
+
+  const schema = Links(conn);
+
+  console.log('Setting up graphql ...');
+  app.use('/links', GraphQLHttp({schema}));
+};
 
 app.use(express.static('dist'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.listen(8080);
+console.log('Connected to database ...');
+connection.connect(async err => {
+  if (err) { throw err; }
 
-connection.connect(() => {
+  setupGraphQL(connection);
 
-  app.use('/links', GraphQLHttp({
-    schema: Links(connection)
-  }));
+  console.log('Server running at :8080 ...');
+  app.listen(8080);
 });
