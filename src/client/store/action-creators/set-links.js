@@ -1,6 +1,15 @@
 import actions from '../actions';
 
-const getLinks = () => fetch('/links')
+const getLinks = () =>
+  fetch('/links', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: '{links{title,url}}'
+    })
+  })
   .then(response => {
     if(response.ok) {
       return response.json();
@@ -11,7 +20,7 @@ const getLinks = () => fetch('/links')
 
 export default () =>
   async dispatch => {
-    const links = await getLinks();
+    const {data: {links}} = await getLinks();
 
     dispatch({
       type: actions.SET_LINKS,
