@@ -6,6 +6,7 @@ module.exports = {
     filename: 'index.js',
     path: __dirname + '/dist'
   },
+  devtool: 'sourcemap',
   module: {
     loaders: [
       {
