@@ -1,7 +1,7 @@
 import Relay from 'react-relay';
 
 class StoreConfig extends Relay.Route {
-  static routeName = 'Home';
+  static routeName = 'Store';
   static queries = {
     store: Component => Relay.QL`
       query Query {
