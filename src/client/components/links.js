@@ -1,18 +1,28 @@
-import React, {PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
 
-const Links = props =>
-  <ul>
-    {
-      props.links.map(
-        (link, index) =>
-          <li key={index}>
-            <a href={link.url}>
-              {link.title}
-            </a>
-          </li>
-      )
-    }
-  </ul>;
+class Links extends Component {
+
+  componentWillMount() {
+    this.props.setLinks();
+  }
+
+  render() {
+    return (
+      <ul>
+        {
+          this.props.links.map(
+            (link, index) =>
+              <li key={index}>
+                <a href={link.url}>
+                  {link.title}
+                </a>
+              </li>
+          )
+        }
+      </ul>
+    );
+  }
+}
 
 Links.displayName = 'Links';
 Links.propTypes = {
