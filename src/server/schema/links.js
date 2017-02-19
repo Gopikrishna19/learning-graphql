@@ -40,7 +40,7 @@ export default connection => {
         resolve: (links, args) => connectionFromPromisedArray(
           new Promise((resolve, reject) => {
 
-            connection.query('SELECT * FROM links', (error, results) => {
+            connection.query(`SELECT * FROM links LIMIT 0, ${args.first}`, (error, results) => {
               if (error) {
                 return reject(error);
               }
