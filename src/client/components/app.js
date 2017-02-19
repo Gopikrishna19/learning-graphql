@@ -1,4 +1,4 @@
-import LinksQueryConfig from '../query-config/links';
+import StoreConfig from '../query-config/store';
 import React from 'react';
 import Relay from 'react-relay';
 import Links from './links';
@@ -10,7 +10,7 @@ Relay.injectNetworkLayer(
 const Application = () =>
   <Relay.RootContainer
     Component={Links}
-    route={new LinksQueryConfig()}
+    route={new StoreConfig()}
   />;
 
 Application.displayName = 'Application';

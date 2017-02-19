@@ -1,6 +1,6 @@
 import Relay from 'react-relay';
 
-class HomeRoute extends Relay.Route {
+class StoreConfig extends Relay.Route {
   static routeName = 'Home';
   static queries = {
     store: Component => Relay.QL`
@@ -11,4 +11,4 @@ class HomeRoute extends Relay.Route {
   }
 }
 
-export default HomeRoute;
+export default StoreConfig;
