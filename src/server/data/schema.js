@@ -1,18 +1,18 @@
-import {GraphQLSchema, GraphQLObjectType, GraphQLInt} from 'graphql';
+import {GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLString} from 'graphql';
 
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'query',
-    fields() {
-      return {
-        counter: {
-          type: GraphQLInt,
-          resolve() {
-            return 42;
-          }
-        }
+    fields: () => ({
+      counter: {
+        type: GraphQLInt,
+        resolve: () => 42
+      },
+      message: {
+        type: GraphQLString,
+        resolve: () => 'GraphQL!'
       }
-    }
+    })
   })
 });
 
