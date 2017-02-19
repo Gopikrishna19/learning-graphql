@@ -1,10 +1,21 @@
-import {GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLList, GraphQLString} from 'graphql';
+import {
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLID,
+  GraphQLNonNull,
+  GraphQLList,
+  GraphQLString
+} from 'graphql';
 
 export default connection => {
 
   const Link = new GraphQLObjectType({
     name: 'Link',
     fields: () => ({
+      id: {
+        type: new GraphQLNonNull(GraphQLID),
+        resolve: link => `${link.id}`
+      },
       title: {type: GraphQLString},
       url: {type: GraphQLString}
     })
@@ -17,7 +28,7 @@ export default connection => {
         type: new GraphQLList(Link),
         resolve: () => new Promise((resolve, reject) => {
 
-          connection.query('SELECT title, url FROM links', (error, results) => {
+          connection.query('SELECT * FROM links', (error, results) => {
             if (error) {
               return reject(error);
             }

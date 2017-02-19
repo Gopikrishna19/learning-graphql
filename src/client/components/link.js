@@ -16,6 +16,7 @@ Link.propTypes = {
 const LinkContainer = Relay.createContainer(Link, {
   fragments: {
     link: () => Relay.QL`fragment on Link {
+      id,
       title,
       url
     }`
