@@ -1,4 +1,4 @@
-import Application from './components/application';
+import Application from './components/app';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'babel-polyfill';
