@@ -5,11 +5,11 @@ import Relay from 'react-relay';
 const Links = props =>
   <ul>
     {
-      props.store.links.map(
+      props.store.links.edges.map(
         (link, index) =>
           <Link
             key={index}
-            link={link}
+            link={link.node}
           />
       )
     }
@@ -23,8 +23,12 @@ Links.propTypes = {
 const Container = Relay.createContainer(Links, {
   fragments: {
     store: () => Relay.QL`fragment on Links { 
-      links {
-        ${Link.getFragment('link')}
+      links(first: 5) {
+        edges {
+          node {
+            ${Link.getFragment('link')}
+          }
+        }
       }
     }`
   }
