@@ -7,7 +7,10 @@ const app = express();
 
 app.use(express.static('dist'));
 
-app.use('/graphql', GraphQLHttp({schema}));
+app.use('/graphql', GraphQLHttp({
+  schema,
+  graphiql: true
+}));
 
 app.get('/links', (req, res) => {
   console.log('Serving: /links');
