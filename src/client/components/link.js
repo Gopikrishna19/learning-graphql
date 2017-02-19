@@ -1,16 +1,27 @@
 import React, {PropTypes} from 'react';
+import Relay from 'react-relay';
 
-const Link = props =>
+const Link = ({link}) =>
   <li>
-    <a href={props.url}>
-      {props.title}
+    <a href={link.url}>
+      {link.title}
     </a>
   </li>;
 
 Link.displayName = 'Link';
 Link.propTypes = {
-  title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired
+  link: PropTypes.object.isRequired
 };
 
-export default Link;
+const LinkContainer = Relay.createContainer(Link, {
+  fragments: {
+    link: () => Relay.QL`fragment on Link {
+      title,
+      url
+    }`
+  }
+});
+
+LinkContainer.displayName = 'LinkContainer';
+
+export default LinkContainer;

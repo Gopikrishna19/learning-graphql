@@ -9,7 +9,7 @@ const Links = props =>
         (link, index) =>
           <Link
             key={index}
-            {...link}
+            link={link}
           />
       )
     }
@@ -23,9 +23,8 @@ Links.propTypes = {
 const Container = Relay.createContainer(Links, {
   fragments: {
     store: () => Relay.QL`fragment on Links { 
-      links { 
-        title, 
-        url 
+      links {
+        ${Link.getFragment('link')}
       }
     }`
   }
