@@ -1,5 +1,5 @@
 import GraphQLHttp from 'express-graphql';
-import Links from './data/schema';
+import Links from './schema/links';
 import {connection} from './mysql';
 import express from 'express';
 
