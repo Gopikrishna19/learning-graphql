@@ -1,6 +1,13 @@
 import actions from '../actions';
 
-const getLinks = () => {};
+const getLinks = () => fetch('/links')
+  .then(response => {
+    if(response.ok) {
+      return response.json();
+    }
+
+    return Promise.reject(response);
+  });
 
 export default () =>
   async dispatch => {
