@@ -1,32 +1,36 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes} from 'react';
+import Relay from 'react-relay';
 
-class Links extends Component {
-
-  componentWillMount() {
-    this.props.setLinks();
-  }
-
-  render() {
-    return (
-      <ul>
-        {
-          this.props.links.map(
-            (link, index) =>
-              <li key={index}>
-                <a href={link.url}>
-                  {link.title}
-                </a>
-              </li>
-          )
-        }
-      </ul>
-    );
-  }
-}
+const Links = props =>
+  <ul>
+    {
+      props.store.links.map(
+        (link, index) =>
+          <li key={index}>
+            <a href={link.url}>
+              {link.title}
+            </a>
+          </li>
+      )
+    }
+  </ul>;
 
 Links.displayName = 'Links';
 Links.propTypes = {
-  links: PropTypes.array.isRequired
+  store: PropTypes.object.isRequired
 };
 
-export default Links;
+const Container = Relay.createContainer(Links, {
+  fragments: {
+    store: () => Relay.QL`fragment on Links { 
+      links { 
+        title, 
+        url 
+      }
+    }`
+  }
+});
+
+Container.displayName = 'LinksContainer';
+
+export default Container;

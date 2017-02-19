@@ -1,20 +1,28 @@
-import {Provider, connect} from 'react-redux';
-import {getStore} from './store';
-import Links from './components/links';
 import React from 'react';
-import actionCreators from './store/action-creators';
+import Relay from 'react-relay';
+import Links from './components/links';
 
-const Container = connect(
-  state => state,
-  actionCreators
-)(Links);
+Relay.injectNetworkLayer(
+  new Relay.DefaultNetworkLayer('/links')
+);
+
+class HomeRoute extends Relay.Route {
+  static routeName = 'Home';
+  static queries = {
+    store: Component => Relay.QL`
+      query Query {
+       store { ${Component.getFragment('store')} }
+      }
+    `
+  }
+}
 
 const AppProvider = () =>
-  <Provider store={getStore()}>
-    <Container/>
-  </Provider>;
+  <Relay.RootContainer
+    Component={Links}
+    route={new HomeRoute()}
+  />;
 
-Container.displayName = 'Container';
 AppProvider.displayName = 'AppProvider';
 
 export default AppProvider;
