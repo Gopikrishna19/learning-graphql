@@ -3,6 +3,8 @@ import reducers from './reducers';
 
 let store;
 
+export actionCreators from './action-creators';
+
 export const getStore = () => {
 
   if (!store) {
