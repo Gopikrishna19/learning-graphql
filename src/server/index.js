@@ -11,10 +11,14 @@ app.use(bodyParser.json());
 
 (async() => {
 
-  const connection = await dbConnect();
+  try {
+    const connection = await dbConnect();
 
-  await setupGraphQL(app, connection);
+    await setupGraphQL(app, connection);
 
-  app.listen(8080);
+    app.listen(8080);
+  } catch (error) {
+    console.log(error);
+  }
 
 })();
