@@ -3,9 +3,14 @@ import {
   GraphQLObjectType,
   GraphQLID,
   GraphQLNonNull,
-  GraphQLList,
   GraphQLString
 } from 'graphql';
+
+import {
+  connectionArgs,
+  connectionDefinitions,
+  connectionFromPromisedArray
+} from 'graphql-relay';
 
 export default connection => {
 
@@ -21,21 +26,30 @@ export default connection => {
     })
   });
 
+  const LinkConnection = connectionDefinitions({
+    name: 'Link',
+    nodeType: Link
+  });
+
   const Links = new GraphQLObjectType({
     name: 'Links',
     fields: () => ({
       links: {
-        type: new GraphQLList(Link),
-        resolve: () => new Promise((resolve, reject) => {
+        type: LinkConnection.connectionType,
+        args: connectionArgs,
+        resolve: (links, args) => connectionFromPromisedArray(
+          new Promise((resolve, reject) => {
 
-          connection.query('SELECT * FROM links', (error, results) => {
-            if (error) {
-              return reject(error);
-            }
+            connection.query('SELECT * FROM links', (error, results) => {
+              if (error) {
+                return reject(error);
+              }
 
-            resolve(results);
-          });
-        })
+              resolve(results);
+            });
+          }),
+          args
+        )
       }
     })
   });
