@@ -1,30 +1,32 @@
-import {GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLString} from 'graphql';
+import {GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLList} from 'graphql';
 
-let counter = 42;
+let data = [
+  {counter: 42},
+  {counter: 43},
+  {counter: 44}
+];
 
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'query',
-    fields: () => ({
-      counter: {
-        type: GraphQLInt,
-        resolve: () => counter
-      },
-      message: {
-        type: GraphQLString,
-        resolve: () => 'GraphQL!'
-      }
-    })
-  }),
-  mutation: new GraphQLObjectType({
-    name: 'mutation',
-    fields: () => ({
-      incrementCounter: {
-        type: GraphQLInt,
-        resolve: () => ++counter
-      }
-    })
+const CounterType = new GraphQLObjectType({
+  name: 'Counter',
+  fields: () => ({
+    counter: {
+      type: GraphQLInt
+    }
   })
 });
 
-export default schema;
+const RootQuery = new GraphQLObjectType({
+  name: 'query',
+  fields: () => ({
+    data: {
+      type: new GraphQLList(CounterType),
+      resolve: () => data
+    }
+  })
+});
+
+const Schema = new GraphQLSchema({
+  query: RootQuery
+});
+
+export default Schema;
