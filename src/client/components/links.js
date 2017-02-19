@@ -21,9 +21,12 @@ Links.propTypes = {
 };
 
 const Container = Relay.createContainer(Links, {
+  initialVariables: {
+    limit: 5
+  },
   fragments: {
     store: () => Relay.QL`fragment on Links { 
-      links(first: 5) {
+      links(first: $limit) {
         edges {
           node {
             ${Link.getFragment('link')}
