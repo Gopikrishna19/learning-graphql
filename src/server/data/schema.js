@@ -1,32 +1,35 @@
-import {GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLList} from 'graphql';
+import {GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLList, GraphQLString} from 'graphql';
 
-let data = [
-  {counter: 42},
-  {counter: 43},
-  {counter: 44}
-];
+export default connection => {
 
-const CounterType = new GraphQLObjectType({
-  name: 'Counter',
-  fields: () => ({
-    counter: {
-      type: GraphQLInt
-    }
-  })
-});
+  const Link = new GraphQLObjectType({
+    name: 'Counter',
+    fields: () => ({
+      id: {type: GraphQLInt},
+      title: {type: GraphQLString},
+      url: {type: GraphQLString}
+    })
+  });
 
-const RootQuery = new GraphQLObjectType({
-  name: 'query',
-  fields: () => ({
-    data: {
-      type: new GraphQLList(CounterType),
-      resolve: () => data
-    }
-  })
-});
+  const Links = new GraphQLObjectType({
+    name: 'query',
+    fields: () => ({
+      links: {
+        type: new GraphQLList(Link),
+        resolve: () => new Promise((resolve, reject) => {
 
-const Schema = new GraphQLSchema({
-  query: RootQuery
-});
+          connection.query('SELECT * FROM links', (error, results) => {
+            if (error) {
+              return reject(error);
+            }
 
-export default Schema;
+            resolve(results);
+          });
+        })
+      }
+    })
+  });
+
+  return new GraphQLSchema({query: Links});
+
+}
