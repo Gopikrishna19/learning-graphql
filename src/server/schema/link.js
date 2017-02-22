@@ -25,7 +25,7 @@ export const CreateLink = (connection, LinksType, store) => mutationWithClientMu
     url: {type: new GraphQLNonNull(GraphQLString)}
   },
   outputFields: {
-    linkEdge: {
+    link: {
       type: LinkConnection.edgeType,
       resolve: node => ({
         cursor: node.id,

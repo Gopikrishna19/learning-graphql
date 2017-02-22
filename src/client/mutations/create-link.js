@@ -7,7 +7,7 @@ export class CreateLinkMutation extends Relay.Mutation {
       parentName: 'store',
       parentID: this.props.store.id,
       connectionName: 'link',
-      edgeName: 'linkEdge',
+      edgeName: 'link',
       rangeBehaviors: {
         '': 'append'
       }
@@ -16,7 +16,7 @@ export class CreateLinkMutation extends Relay.Mutation {
 
   getFatQuery() {
     return Relay.QL`fragment on CreateLinkPayload {
-      linkEdge,
+      link,
       store {
         links
       }
