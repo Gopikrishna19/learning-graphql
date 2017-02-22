@@ -1,29 +1,30 @@
 import {GraphQLSchema, GraphQLObjectType} from 'graphql';
 import {CreateLink} from './link';
 import Links from './links';
-import {globalIdField} from 'graphql-relay';
 
-const getStore = connection => new GraphQLObjectType({
+const store = {};
+
+const getStore = (connection, LinksType) => new GraphQLObjectType({
   name: 'Store',
   fields: () => ({
-    id: globalIdField('Store'),
     store: {
-      type: Links(connection),
-      resolve: () => ({})
+      type: LinksType,
+      resolve: () => store
     }
   })
 });
 
-const getMutation = (connection, Store) => new GraphQLObjectType({
+const getMutation = (connection, LinksType) => new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
-    createLink: CreateLink(connection, Store)
+    createLink: CreateLink(connection, LinksType, store)
   })
 });
 
 export default connection => {
-  const Store = getStore(connection);
-  const Mutation = getMutation(connection, Store);
+  const LinksType = Links(connection);
+  const Store = getStore(connection, LinksType);
+  const Mutation = getMutation(connection, LinksType);
 
   return new GraphQLSchema({
     query: Store,
