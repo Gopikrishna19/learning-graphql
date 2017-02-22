@@ -1,5 +1,5 @@
 import GraphQLHttp from 'express-graphql';
-import Links from './links';
+import Links from './store';
 import fs from 'fs';
 import {graphql} from 'graphql';
 import {introspectionQuery} from 'graphql/utilities';

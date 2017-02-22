@@ -12,24 +12,24 @@ import {
   connectionFromPromisedArray
 } from 'graphql-relay';
 
-export default connection => {
+const Link = new GraphQLObjectType({
+  name: 'Link',
+  fields: () => ({
+    id: {
+      type: new GraphQLNonNull(GraphQLID),
+      resolve: link => `${link.id}`
+    },
+    title: {type: GraphQLString},
+    url: {type: GraphQLString}
+  })
+});
 
-  const Link = new GraphQLObjectType({
-    name: 'Link',
-    fields: () => ({
-      id: {
-        type: new GraphQLNonNull(GraphQLID),
-        resolve: link => `${link.id}`
-      },
-      title: {type: GraphQLString},
-      url: {type: GraphQLString}
-    })
-  });
+const LinkConnection = connectionDefinitions({
+  name: 'Link',
+  nodeType: Link
+});
 
-  const LinkConnection = connectionDefinitions({
-    name: 'Link',
-    nodeType: Link
-  });
+const getQuery = connection => {
 
   const Links = new GraphQLObjectType({
     name: 'Links',
@@ -54,7 +54,7 @@ export default connection => {
     })
   });
 
-  const Store = new GraphQLObjectType({
+  return new GraphQLObjectType({
     name: 'Store',
     fields: () => ({
       store: {
@@ -63,6 +63,12 @@ export default connection => {
       }
     })
   });
+
+};
+
+export default connection => {
+
+  const Store = getQuery(connection);
 
   return new GraphQLSchema({query: Store});
 
