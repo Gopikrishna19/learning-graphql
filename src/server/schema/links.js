@@ -1,10 +1,12 @@
 import {connectionArgs, connectionFromPromisedArray} from 'graphql-relay';
 import {GraphQLObjectType} from 'graphql';
 import LinkConnection from './link';
+import {globalIdField} from 'graphql-relay';
 
 export default connection => new GraphQLObjectType({
   name: 'Links',
   fields: () => ({
+    id: globalIdField('Store'),
     links: {
       type: LinkConnection.connectionType,
       args: connectionArgs,
