@@ -18,14 +18,14 @@ const LinkConnection = connectionDefinitions({
   nodeType: Link
 });
 
-export const CreateLink = (connection, Store) => mutationWithClientMutationId({
+export const CreateLink = (connection, LinksType, store) => mutationWithClientMutationId({
   name: 'CreateLink',
   inputFields: {
     title: {type: new GraphQLNonNull(GraphQLString)},
     url: {type: new GraphQLNonNull(GraphQLString)}
   },
   outputFields: {
-    link: {
+    linkEdge: {
       type: LinkConnection.edgeType,
       resolve: node => ({
         cursor: node.id,
@@ -33,7 +33,8 @@ export const CreateLink = (connection, Store) => mutationWithClientMutationId({
       })
     },
     store: {
-      type: Store
+      type: LinksType,
+      resolve: () => store
     }
   },
   mutateAndGetPayload: ({title, url}) => new Promise(
